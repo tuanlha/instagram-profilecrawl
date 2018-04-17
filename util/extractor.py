@@ -59,7 +59,7 @@ def extract_post_info(browser):
           .find_elements_by_tag_name('span')[0].text.replace(',', '')
 
   except:
-    views = None
+    views = 0
 
   likes = 0
 
@@ -114,7 +114,7 @@ def extract_post_info(browser):
     if views:
         likes = video_likes
 
-  return img, tags, int(likes), int(len(comments) - 1), date, user_commented_list, views
+  return img, tags, int(likes), int(len(comments) - 1), date, user_commented_list, int(views)
 
 
 def extract_information(browser, username, limit_amount):
