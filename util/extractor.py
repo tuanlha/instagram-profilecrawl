@@ -43,10 +43,14 @@ def extract_post_info(browser):
   imgs = post.find_elements_by_tag_name('img')
   img = ''
 
-
   if len(imgs) >= 2:
     img = imgs[1].get_attribute('src')
 
+  try:
+    views = post.find_element_by_class_name('_m5zti')\
+          .find_elements_by_tag_name('span')[0].text.replace(',', '')
+  except:
+    views = None
 
   likes = 0
 
@@ -97,7 +101,7 @@ def extract_post_info(browser):
 
     tags = findall(r'#[A-Za-z0-9]*', tags)
     print (len(user_commented_list), " comments.")
-  return img, tags, int(likes), int(len(comments) - 1), date, user_commented_list
+  return img, tags, int(likes), int(len(comments) - 1), date, user_commented_list, views
 
 
 def extract_information(browser, username, limit_amount):
@@ -182,13 +186,14 @@ def extract_information(browser, username, limit_amount):
     print ("\nScrapping link: ", link)
     browser.get(link)
     try:
-      img, tags, likes, comments, date, user_commented_list = extract_post_info(browser)
+      img, tags, likes, comments, date, user_commented_list, views = extract_post_info(browser)
 
       post_infos.append({
         'img': img,
         'date': date,
         #'tags': tags,
         'likes': likes,
+        'views': views,
         'comments': comments,
         'url': link,
       })
