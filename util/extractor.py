@@ -2,6 +2,7 @@
 from time import sleep
 from re import findall
 import math
+import traceback
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
@@ -47,8 +48,16 @@ def extract_post_info(browser):
     img = imgs[1].get_attribute('src')
 
   try:
+    browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    post.find_element_by_class_name('_m5zti').click()
+    post = browser.find_element_by_class_name('_622au')
+
     views = post.find_element_by_class_name('_m5zti')\
           .find_elements_by_tag_name('span')[0].text.replace(',', '')
+
+    video_likes = post.find_element_by_class_name('_m10kk')\
+          .find_elements_by_tag_name('span')[0].text.replace(',', '')
+
   except:
     views = 0
 
@@ -101,6 +110,10 @@ def extract_post_info(browser):
 
     tags = findall(r'#[A-Za-z0-9]*', tags)
     print (len(user_commented_list), " comments.")
+
+    if views:
+        likes = video_likes
+
   return img, tags, int(likes), int(len(comments) - 1), date, user_commented_list, int(views)
 
 
