@@ -50,7 +50,7 @@ def extract_post_info(browser):
     views = post.find_element_by_class_name('_m5zti')\
           .find_elements_by_tag_name('span')[0].text.replace(',', '')
   except:
-    views = None
+    views = 0
 
   likes = 0
 
@@ -101,7 +101,7 @@ def extract_post_info(browser):
 
     tags = findall(r'#[A-Za-z0-9]*', tags)
     print (len(user_commented_list), " comments.")
-  return img, tags, int(likes), int(len(comments) - 1), date, user_commented_list, views
+  return img, tags, int(likes), int(len(comments) - 1), date, user_commented_list, int(views)
 
 
 def extract_information(browser, username, limit_amount):
@@ -154,7 +154,7 @@ def extract_information(browser, username, limit_amount):
       links2 = list(set(links2))
       print ("Scrolling profile ", len(links2), "/", 12*math.ceil(num_of_posts/12))
       body_elem.send_keys(Keys.END)
-      sleep(1.5)
+      sleep(3)
 
       ##remove bellow part to never break the scrolling script before reaching the num_of_posts
       if (len(links2) == previouslen):

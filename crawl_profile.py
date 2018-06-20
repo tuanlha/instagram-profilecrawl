@@ -19,7 +19,7 @@ browser = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=chrome_option
 
 #SETTINGS:
 #set limit of posts to analyze:
-limit_amount = 12000
+limit_amount = 120000
 
 # makes sure slower connections work as well
 print ("Waiting 10 sec")
@@ -55,3 +55,4 @@ except KeyboardInterrupt:
 finally:
   browser.delete_all_cookies()
   browser.close()
+  browser.quit()
